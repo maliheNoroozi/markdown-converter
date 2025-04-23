@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Select,
   SelectContent,
@@ -5,12 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ConvertOptionsType, ConvertType } from "@/types/convert";
-
-interface Props {
-  type: ConvertType;
-  handleTypeChange: (newType: ConvertType) => void;
-}
+import { useConverter } from "@/hooks/useConverter";
+import { ConvertOptionsType } from "@/types/convert";
 
 const options: ConvertOptionsType = [
   {
@@ -28,9 +26,11 @@ const options: ConvertOptionsType = [
   },
 ];
 
-export function ConvertOptions({ type, handleTypeChange }: Props) {
+export function ConvertOptions() {
+  const { type, setType } = useConverter();
+
   return (
-    <Select value={type} onValueChange={handleTypeChange}>
+    <Select value={type} onValueChange={setType}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select convertion type" />
       </SelectTrigger>
