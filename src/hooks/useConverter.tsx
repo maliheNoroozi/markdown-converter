@@ -4,6 +4,18 @@ import { createContext, useContext, useState } from "react";
 import { ConvertType } from "@/types/convert";
 
 const defaultMarkdown = `
+# Sample Markdown
+
+This is a paragraph with **bold text** and *italic text*.
+
+## Subheading
+
+- List item 1
+- List item 2
+- List item 3
+
+[A link](https://example.com)
+
 # h1 Heading
 ## h2 Heading
 ### h3 Heading
