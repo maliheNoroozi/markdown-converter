@@ -1,14 +1,13 @@
 import {
   HtmlConverter,
-  PdfCoverter,
-  PowerpointCoverter,
-  WordCoverter,
+  PdfConverter,
+  PowerpointConverter,
+  WordConverter,
 } from "@/components";
-import { ConverterType } from "@/types/convert";
 
-export const Converter: ConverterType = {
+export const Converter = {
   html: HtmlConverter,
-  pdf: PdfCoverter,
-  powerpoint: PowerpointCoverter,
-  word: WordCoverter,
+  pdf: PdfConverter,
+  powerpoint: PowerpointConverter,
+  word: WordConverter,
 };

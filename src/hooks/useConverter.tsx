@@ -47,7 +47,13 @@ export const ConverterProvider = ({
 
   return (
     <ConverterContext.Provider
-      value={{ type, setType, markdown, setMarkdown, handleConvert }}
+      value={{
+        type,
+        setType,
+        markdown,
+        setMarkdown,
+        handleConvert,
+      }}
     >
       {children}
     </ConverterContext.Provider>

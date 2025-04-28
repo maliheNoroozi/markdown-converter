@@ -10,3 +10,7 @@ export type ConvertOptionsType = {
   value: ConvertType;
   label: string;
 }[];
+
+export interface ConverterRef {
+  export: () => Promise<void>;
+}
