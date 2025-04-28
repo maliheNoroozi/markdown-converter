@@ -3,8 +3,7 @@
 import { createContext, useContext, useState } from "react";
 import { ConvertType } from "@/types/convert";
 
-const defaultMarkdown = `
-# Sample Markdown
+const defaultMarkdown = `# Sample Markdown
 
 This is a paragraph with **bold text** and *italic text*.
 
