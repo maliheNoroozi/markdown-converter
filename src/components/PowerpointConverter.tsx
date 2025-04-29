@@ -4,7 +4,7 @@ import { marked } from "marked";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConverterRef } from "@/types/convert";
-import { processElement } from "@/lib/utils";
+import { processSlideElement } from "@/lib/utils";
 
 export const PowerpointConverter = forwardRef<
   ConverterRef,
@@ -39,7 +39,8 @@ export const PowerpointConverter = forwardRef<
 
       let currentY = 0.5;
       Array.from(temp.children).forEach((element) => {
-        currentY = processElement(slide, element, currentY) ?? currentY + 0.5;
+        currentY =
+          processSlideElement(slide, element, currentY) ?? currentY + 0.5;
       });
     });
 

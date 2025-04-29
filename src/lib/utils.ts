@@ -1,12 +1,48 @@
 import pptxgen from "pptxgenjs";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { Paragraph, TextRun } from "docx";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const processElement = (
+const elements = {
+  h1: {
+    fontSize: 34,
+    bold: true,
+  },
+  h2: {
+    fontSize: 30,
+    bold: true,
+  },
+  h3: {
+    fontSize: 24,
+    bold: true,
+  },
+  h4: {
+    fontSize: 20,
+    bold: true,
+  },
+  h5: {
+    fontSize: 18,
+    bold: true,
+  },
+  h6: {
+    fontSize: 16,
+    bold: true,
+  },
+  ul: {
+    fontSize: 16,
+    bullet: { type: "bullet" },
+    spacing: { line: 16 },
+  },
+  p: {
+    fontSize: 16,
+  },
+};
+
+export const processSlideElement = (
   slide: pptxgen.Slide,
   element: Element,
   currentY: number
@@ -28,9 +64,8 @@ export const processElement = (
     case "h1":
       slide.addText(text, {
         ...defaultTextOptions,
-        fontSize: 34,
-        bold: true,
         align: "center",
+        ...elements.h1,
       });
       currentY += 0.7;
       break;
@@ -38,8 +73,7 @@ export const processElement = (
     case "h2":
       slide.addText(text, {
         ...defaultTextOptions,
-        fontSize: 30,
-        bold: true,
+        ...elements.h2,
       });
       currentY += 0.6;
       break;
@@ -47,8 +81,7 @@ export const processElement = (
     case "h3":
       slide.addText(text, {
         ...defaultTextOptions,
-        fontSize: 24,
-        bold: true,
+        ...elements.h3,
       });
       currentY += 0.5;
       break;
@@ -56,8 +89,7 @@ export const processElement = (
     case "h4":
       slide.addText(text, {
         ...defaultTextOptions,
-        fontSize: 20,
-        bold: true,
+        ...elements.h4,
       });
       currentY += 0.5;
       break;
@@ -65,8 +97,7 @@ export const processElement = (
     case "h5":
       slide.addText(text, {
         ...defaultTextOptions,
-        fontSize: 18,
-        bold: true,
+        ...elements.h5,
       });
       currentY += 0.5;
       break;
@@ -74,8 +105,7 @@ export const processElement = (
     case "h6":
       slide.addText(text, {
         ...defaultTextOptions,
-        fontSize: 16,
-        bold: true,
+        ...elements.h6,
       });
       currentY += 0.5;
       break;
@@ -87,9 +117,7 @@ export const processElement = (
       }));
       slide.addText(items, {
         ...defaultTextOptions,
-        fontSize: 16,
-        bullet: { type: "bullet" },
-        spacing: { line: 16 },
+        ...elements.ul,
       });
       currentY += 0.3 * items.length;
       break;
@@ -120,4 +148,127 @@ export const processElement = (
   }
 
   return currentY;
+};
+
+export const processWordElement = (children: Paragraph[], element: Element) => {
+  const text = element.textContent?.trim() || "";
+  if (!text) return;
+
+  const tagName = element.tagName.toLowerCase();
+
+  switch (tagName) {
+    case "h1":
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({ text, ...elements.h1, size: elements.h1.fontSize }),
+          ],
+          spacing: { after: 200 },
+        })
+      );
+      break;
+
+    case "h2":
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({ text, ...elements.h2, size: elements.h2.fontSize }),
+          ],
+          spacing: { after: 160 },
+        })
+      );
+      break;
+
+    case "h3":
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({ text, ...elements.h3, size: elements.h3.fontSize }),
+          ],
+          spacing: { after: 160 },
+        })
+      );
+      break;
+
+    case "h4":
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({ text, ...elements.h4, size: elements.h4.fontSize }),
+          ],
+          spacing: { after: 160 },
+        })
+      );
+      break;
+
+    case "h5":
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({ text, ...elements.h5, size: elements.h5.fontSize }),
+          ],
+          spacing: { after: 160 },
+        })
+      );
+      break;
+
+    case "h6":
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({ text, ...elements.h6, size: elements.h6.fontSize }),
+          ],
+          spacing: { after: 160 },
+        })
+      );
+      break;
+
+    case "ul":
+    case "ol":
+      Array.from(element.children).forEach((li) => {
+        children.push(
+          new Paragraph({
+            children: [new TextRun({ text: li.textContent || "" })],
+            bullet: { level: 0 },
+            spacing: { after: 80 },
+          })
+        );
+      });
+      break;
+
+    case "p":
+      const runs: TextRun[] = [];
+      Array.from(element.childNodes).forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          runs.push(new TextRun({ text: node.textContent || "" }));
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          const el = node as Element;
+          switch (el.tagName.toLowerCase()) {
+            case "strong":
+              runs.push(
+                new TextRun({ text: el.textContent || "", bold: true })
+              );
+              break;
+            case "em":
+              runs.push(
+                new TextRun({ text: el.textContent || "", italics: true })
+              );
+              break;
+            case "a":
+              runs.push(
+                new TextRun({
+                  text: el.textContent || "",
+                  color: "0000FF",
+                  underline: {},
+                })
+              );
+              break;
+          }
+        }
+      });
+      children.push(new Paragraph({ children: runs, spacing: { after: 120 } }));
+      break;
+  }
+
+  return children;
 };

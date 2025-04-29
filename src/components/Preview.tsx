@@ -33,18 +33,16 @@ export function Preview() {
         <ConvertOptions />
       </div>
       <div className="flex flex-col flex-1 min-h-0 gap-4 relative">
-        {(type === "pdf" || type === "powerpoint") && (
-          <div className="absolute top-4 right-4 z-10">
-            {isExporting ? (
-              <LoaderCircle className="text-gray-500 animate-spin" />
-            ) : (
-              <DownloadIcon
-                className={`cursor-pointer text-gray-500 hover:text-gray-700`}
-                onClick={handleExport}
-              />
-            )}
-          </div>
-        )}
+        <div className="absolute top-4 right-4 z-10">
+          {isExporting ? (
+            <LoaderCircle className="text-gray-500 animate-spin" />
+          ) : (
+            <DownloadIcon
+              className={`cursor-pointer text-gray-500 hover:text-gray-700`}
+              onClick={handleExport}
+            />
+          )}
+        </div>
         <Component ref={converterRef} markdown={markdown} />
       </div>
     </div>
