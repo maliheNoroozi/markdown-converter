@@ -4,6 +4,7 @@ import { marked } from "marked";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConverterRef } from "@/types/convert";
+import { processElement } from "@/lib/utils";
 
 export const PowerpointConverter = forwardRef<
   ConverterRef,
@@ -15,7 +16,6 @@ export const PowerpointConverter = forwardRef<
   useEffect(() => {
     const createParsedSlides = async () => {
       const slideContents = markdown
-        .trim()
         .split(/^# /gm)
         .filter(Boolean)
         .map((s) => "# " + s.trim());
@@ -31,14 +31,19 @@ export const PowerpointConverter = forwardRef<
 
   const convertToPPTX = async () => {
     const pptx = new pptxgen();
-    slides.forEach((slideMarkdown) => {
-      const [title, ...content] = slideMarkdown.split("\n");
+
+    slides.forEach((slideHtml) => {
       const slide = pptx.addSlide();
-      slide.addText(title, { x: 0.5, y: 0.5, fontSize: 24 });
-      slide.addText(content.join("\n"), { x: 0.5, y: 1.5, fontSize: 16 });
+      const temp = document.createElement("div");
+      temp.innerHTML = slideHtml;
+
+      let currentY = 0.5;
+      Array.from(temp.children).forEach((element) => {
+        currentY = processElement(slide, element, currentY) ?? currentY + 0.5;
+      });
     });
-    const buffer = await pptx.write({ outputType: "arraybuffer" });
-    return buffer;
+
+    return await pptx.write({ outputType: "arraybuffer" });
   };
 
   const nextSlide = () => {
