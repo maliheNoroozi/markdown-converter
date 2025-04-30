@@ -8,8 +8,8 @@ import { ConverterRef } from "@/types/convert";
 
 export function Preview() {
   const converterRef = useRef<ConverterRef>(null);
-  const { type, markdown } = useConverter();
   const [isExporting, setIsExporting] = useState<boolean>(false);
+  const { type, markdown } = useConverter();
 
   const handleExport = async () => {
     if (!converterRef.current || isExporting) return;
@@ -27,7 +27,7 @@ export function Preview() {
   const Component = Converter[type];
 
   return (
-    <div className="flex flex-col flex-1 min-h-0 gap-4">
+    <div className="flex flex-col flex-1 gap-4 overflow-auto">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Preview</h2>
         <ConvertOptions />
