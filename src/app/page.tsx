@@ -3,7 +3,7 @@ import { Preview } from "@/components/Preview";
 
 export default function Home() {
   return (
-    <main className=" h-screen flex flex-col p-4 md:p-6 lg:p-8">
+    <main className="flex flex-col p-8 md:p-12 lg:p-8">
       <header className="mb-4 md:mb-6">
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">
           Markdown Converter
@@ -14,9 +14,13 @@ export default function Home() {
         </p>
       </header>
 
-      <div className="flex-1 flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 min-h-[500px]">
-        <Markdown />
-        <Preview />
+      <div className="flex flex-col gap-16 md:flex-row md:gap-6">
+        <div className="h-[600px] md:h-[750px] md:flex-1">
+          <Markdown />
+        </div>
+        <div className="h-[600px] md:h-[750px] md:flex-1">
+          <Preview />
+        </div>
       </div>
     </main>
   );

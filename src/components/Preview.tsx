@@ -27,25 +27,25 @@ export function Preview() {
   const Component = Converter[type];
 
   return (
-    <div className="flex flex-col flex-1 gap-4 overflow-auto">
-      <div className="flex items-center justify-between">
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-bold">Preview</h2>
         <ConvertOptions />
       </div>
-      <div className="flex flex-col flex-1 min-h-0 gap-4 relative">
+      <div className="flex-1 min-h-0 relative">
         <div className="absolute top-4 right-4 z-10">
           {isExporting ? (
             <LoaderCircle className="text-gray-500 animate-spin" />
           ) : (
-            type !== "html" && (
-              <DownloadIcon
-                className={`cursor-pointer text-gray-500 hover:text-gray-700`}
-                onClick={handleExport}
-              />
-            )
+            <DownloadIcon
+              className={`cursor-pointer text-gray-500 hover:text-gray-700`}
+              onClick={handleExport}
+            />
           )}
         </div>
-        <Component ref={converterRef} markdown={markdown} />
+        <div className="h-full overflow-auto">
+          <Component ref={converterRef} markdown={markdown} />
+        </div>
       </div>
     </div>
   );
