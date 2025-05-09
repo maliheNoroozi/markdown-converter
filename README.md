@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Markdown Converter
+
+A powerful web application that converts Markdown content into various formats including PDF, PowerPoint, Word, and HTML. Built with Next.js and TypeScript, this application provides a seamless experience for converting your markdown documents into professional formats.
+
+## Features
+
+- **Multiple Format Support**
+
+  - Convert to PDF
+  - Convert to PowerPoint presentations
+  - Convert to Word documents
+  - View as HTML
+
+- **Real-time Preview**
+
+  - Live preview of your markdown content
+  - Split-screen editor and preview
+  - Responsive design for all screen sizes
+
+- **PowerPoint Features**
+
+  - Automatic slide creation based on headings
+  - Maintains formatting and styling
+  - Supports images and links
+  - Navigation controls for preview
+
+- **PDF Features**
+
+  - High-quality PDF generation
+  - Preserves all formatting and styling
+  - Optimized for printing
+
+- **Word Features**
+  - Clean document conversion
+  - Maintains heading hierarchy
+  - Preserves text formatting
+
+## Tech Stack
+
+- **Frontend Framework**: Next.js
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Markdown Processing**:
+  - `marked` for markdown parsing
+  - `react-markdown` for preview rendering
+- **Conversion Libraries**:
+  - `pptxgenjs` for PowerPoint generation
+  - `jspdf` and `html2canvas` for PDF generation
+  - `docx` for Word document generation
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   ```bash
+   git clone https://github.com/yourusername/markdown-converter.git
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   cd markdown-converter
+   npm install
+   ```
+
+3. Run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Usage
+
+1. Write or paste your markdown content in the editor
+2. Use the preview panel to see how your content looks
+3. Choose your desired output format (PDF, PowerPoint, Word, or HTML)
+4. Click the download button to save your converted document
+
+### Markdown Tips
+
+- Use `#` for headings (creates new slides in PowerPoint)
+- Use `**bold**` for bold text
+- Use `*italic*` for italic text
+- Use `-` or `*` for bullet points
+- Use `[link text](url)` for links
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── layouts/         # Shared layout components
+│   ├── PdfConverter.tsx
+│   ├── WordConverter.tsx
+│   ├── PowerpointConverter.tsx
+│   └── HtmlConverter.tsx
+├── lib/
+│   └── utils.ts        # Utility functions
+├── types/
+│   └── convert.ts      # TypeScript types
+└── app/
+    └── page.tsx        # Main application page
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contributing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## License
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License - see the LICENSE file for details.
