@@ -37,10 +37,12 @@ export function Preview() {
           {isExporting ? (
             <LoaderCircle className="text-gray-500 animate-spin" />
           ) : (
-            <DownloadIcon
-              className={`cursor-pointer text-gray-500 hover:text-gray-700`}
-              onClick={handleExport}
-            />
+            type !== "html" && (
+              <DownloadIcon
+                className={`cursor-pointer text-gray-500 hover:text-gray-700`}
+                onClick={handleExport}
+              />
+            )
           )}
         </div>
         <Component ref={converterRef} markdown={markdown} />

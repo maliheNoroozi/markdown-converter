@@ -4,7 +4,7 @@ import { forwardRef, useImperativeHandle, useRef } from "react";
 import { Document, Packer, Paragraph } from "docx";
 import ReactMarkdown from "react-markdown";
 import { ConverterRef } from "@/types/convert";
-import { processWordElement } from "@/lib/utils";
+import { processWordElement, convertMarkdownToHtml } from "@/lib/utils";
 
 export const WordConverter = forwardRef<ConverterRef, { markdown: string }>(
   ({ markdown }, ref) => {
@@ -14,8 +14,9 @@ export const WordConverter = forwardRef<ConverterRef, { markdown: string }>(
       const markdownContent = contentRef.current?.querySelector(".prose");
       if (!markdownContent) return;
 
+      const html = await convertMarkdownToHtml(markdown);
       const temp = document.createElement("div");
-      temp.innerHTML = markdownContent.innerHTML;
+      temp.innerHTML = html;
 
       let children: Paragraph[] = [];
       Array.from(temp.children).forEach((element) => {

@@ -2,6 +2,7 @@ import pptxgen from "pptxgenjs";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Paragraph, TextRun } from "docx";
+import { marked } from "marked";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -271,4 +272,17 @@ export const processWordElement = (children: Paragraph[], element: Element) => {
   }
 
   return children;
+};
+
+export const convertMarkdownToHtml = async (
+  markdown: string
+): Promise<string> => {
+  return marked.parse(markdown);
+};
+
+export const splitMarkdownIntoSections = (markdown: string): string[] => {
+  return markdown
+    .split(/^# /gm)
+    .filter(Boolean)
+    .map((s) => "# " + s.trim());
 };
