@@ -5,6 +5,7 @@ import { DownloadIcon, LoaderCircle } from "lucide-react";
 import { Converter, ConvertOptions } from "@/components";
 import { useConverter } from "@/hooks/useConverter";
 import { ConverterRef } from "@/types/convert";
+import { EditorLayout } from "./layouts/EditorLayout";
 
 export function Preview() {
   const converterRef = useRef<ConverterRef>(null);
@@ -27,7 +28,7 @@ export function Preview() {
   const Component = Converter[type];
 
   return (
-    <div className="flex flex-col h-full">
+    <EditorLayout>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-bold">Preview</h2>
         <ConvertOptions />
@@ -37,16 +38,18 @@ export function Preview() {
           {isExporting ? (
             <LoaderCircle className="text-gray-500 animate-spin" />
           ) : (
-            <DownloadIcon
-              className={`cursor-pointer text-gray-500 hover:text-gray-700`}
-              onClick={handleExport}
-            />
+            type !== "html" && (
+              <DownloadIcon
+                className={`cursor-pointer text-gray-500 hover:text-gray-700`}
+                onClick={handleExport}
+              />
+            )
           )}
         </div>
         <div className="h-full overflow-auto">
           <Component ref={converterRef} markdown={markdown} />
         </div>
       </div>
-    </div>
+    </EditorLayout>
   );
 }

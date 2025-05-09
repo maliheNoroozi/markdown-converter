@@ -8,6 +8,7 @@ import {
   processSlideElement,
   splitMarkdownIntoSections,
 } from "@/lib/utils";
+import { ConverterLayout } from "@/components/layouts/ConverterLayout";
 
 export const PowerpointConverter = forwardRef<
   ConverterRef,
@@ -72,7 +73,7 @@ export const PowerpointConverter = forwardRef<
   }));
 
   return (
-    <div className="flex-grow overflow-auto p-4 bg-gray-100 rounded-md">
+    <ConverterLayout className="h-full">
       <div className="relative h-full flex items-center justify-center">
         <Button
           size="icon"
@@ -98,6 +99,6 @@ export const PowerpointConverter = forwardRef<
           <ChevronRight className="size-8" />
         </Button>
       </div>
-    </div>
+    </ConverterLayout>
   );
 });
